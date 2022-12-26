@@ -1,0 +1,55 @@
+version: "3.8"
+networks:
+  local_network:
+    driver: bridge
+    ipam:
+      config: 
+        - subnet: 172.16.238.0/24
+services: 
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx-php-5-6-1
+  #   ports:
+  #     - "80:80" # binds local 8081 port with nignx's 80 port
+  #     # - "443:443"
+  #   volumes: 
+  #     - ./src:/var/www/html
+  #     - ./conf/nginx/conf:/etc/nginx/conf.d/:ro
+  #   depends_on: 
+  #     - php
+  #     - mysql
+  #   networks: 
+  #     - local_network
+  mysql:
+    # platform: linux/x86_64
+    image: mysql:latest
+    container_name: mysql-php-5-6
+    restart: always
+    command: 
+      --default-authentication-plugin=mysql_native_password
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - ./conf/mysql/conf/my.cnf:/etc/my.cnf
+      - ./mysql:/var/lib/mysql:delegated
+    environment: 
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: database
+      MYSQL_TCP_PORT: 3306
+    networks: 
+      - local_network
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-5-6
+    volumes: 
+        - ./src:/var/www/html
+        - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "80:80"
+      - "443:443"
+    networks: 
+      - local_network
