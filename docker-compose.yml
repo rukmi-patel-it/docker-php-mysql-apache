@@ -6,22 +6,7 @@ networks:
       config: 
         - subnet: 172.16.238.0/24
 services: 
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx-php-5-6-1
-  #   ports:
-  #     - "80:80" # binds local 8081 port with nignx's 80 port
-  #     # - "443:443"
-  #   volumes: 
-  #     - ./src:/var/www/html
-  #     - ./conf/nginx/conf:/etc/nginx/conf.d/:ro
-  #   depends_on: 
-  #     - php
-  #     - mysql
-  #   networks: 
-  #     - local_network
   mysql:
-    # platform: linux/x86_64
     image: mysql:latest
     container_name: mysql-php-5-6
     restart: always

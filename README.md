@@ -24,3 +24,6 @@ Generate "example.com+4.pem" and "example.com+4-key.pem".
 $ mkcert "*.example.it"
 
 Generate "_wildcard.example.it.pem" and "_wildcard.example.it-key.pem".
+
+
+Sameway Windos/Linux users can install and use openssl to generate the SSL certificate.
